@@ -13,6 +13,7 @@ class Save(threading.Thread):
         self.monitored_state = None
 
         self.slot = "Slot1"
+        os.makedirs("./Data/Saves/", exist_ok=True)
         self.gameActive = False
         self.enableAutoSave = True if self.parent.config["Saves"]["enableautosave"] == "yes" else False
         self.autosaveInterval = int(self.parent.config["Saves"]["autosaveinterval"])

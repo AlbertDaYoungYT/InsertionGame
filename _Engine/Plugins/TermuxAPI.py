@@ -1,6 +1,7 @@
 import termux
 import sys
 
+
 class TermuxAPI:
 
     def __init__(self):
