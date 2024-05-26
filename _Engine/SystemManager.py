@@ -6,7 +6,7 @@ import os
 class System:
 
     def __init__(self, _self):
-        self.__init__(_self)
+        self.parent = _self
 
         self.addon_location = "./Content/Addons/"
         self.dlc_location = "./Content/DLCs/"
@@ -15,7 +15,7 @@ class System:
         self.cache_location = "./Data/Cache/"
         self.log_location = "./Data/Logs/"
         self.save_location = "./Data/Saves/"
-        
+
     
     def getSystem(self):
         return platform.system()

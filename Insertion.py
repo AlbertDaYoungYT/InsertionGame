@@ -1,5 +1,6 @@
 import configparser
 import platform
+import logging
 import uuid
 import time
 import json
@@ -17,4 +18,3 @@ if c["DEFAULT"]["MachineID"] == "":
 
 
 engine = Engine.Engine(c["DEFAULT"]["MachineID"], c)
-engine.start()

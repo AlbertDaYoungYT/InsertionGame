@@ -4,7 +4,7 @@ import uuid
 
 class Cache:
     def __init__(self, _self):
-        self.__init__(_self)
+        self.parent = _self
 
         self.cache_map = {}
 

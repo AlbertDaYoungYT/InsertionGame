@@ -13,17 +13,14 @@ import threading
 import locale
 
 
-class Engine(threading.Thread):
+class Engine:
 
     def __init__(self, id, config):
-        threading.Thread.__init__(self)
         self.id = id
         self.config = config
 
         self.locale = locale.getdefaultlocale()[0]
-    
-    
-    def run(self) -> None:
+
         self.log = LogManager.Log(self)
         self.system = SystemManager.System(self)
         self.language = LanguageManager.Language(self)
@@ -33,3 +30,4 @@ class Engine(threading.Thread):
         self.content = ContentManager.Content(self)
         self.save = SaveManager.Save(self)
         self.server = ServerManager.Server(self)
+    

@@ -5,7 +5,7 @@ import requests
 class Server(threading.Thread):
 
     def __init__(self, _self):
-        self.__init__(_self)
+        self.parent = _self
         threading.Thread.__init__(self)
 
         self.server_uri = "https://"
