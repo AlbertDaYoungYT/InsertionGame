@@ -1,4 +1,10 @@
-from _Engine.Builtin import Screen
+import blessed
 
 
-class Intro(Screen):
+
+class Intro:
+    def __init__(self, term):
+        self.term = term
+
+    def draw(self):
+        
