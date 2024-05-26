@@ -8,6 +8,7 @@ for filename in os.listdir(current_directory):
     if filename.endswith('.py') and filename != '__init__.py':
         module_name = filename[:-3]
         importlib.import_module(f".{module_name}", package=__name__)
+        imported_modules.append(module_name)
 
 def run(_self):
     for module in imported_modules:

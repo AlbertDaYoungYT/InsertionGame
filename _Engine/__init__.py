@@ -9,8 +9,10 @@ from _Engine import SystemManager
 from _Engine import TimeManager
 
 
+import importlib
 import threading
 import locale
+import os
 
 
 class Engine:
@@ -30,4 +32,19 @@ class Engine:
         self.content = ContentManager.Content(self)
         self.save = SaveManager.Save(self)
         self.server = ServerManager.Server(self)
+
+        self.loadPlugins()
     
+    def loadPlugins(self):
+        imported_modules = []
+        current_directory = os.path.join(os.path.dirname(__file__), "./Plugins/")
+
+        for filename in os.listdir(current_directory):
+            if filename.endswith('.py') and filename != '__init__.py':
+                module_name = filename[:-3]
+                importlib.import_module(f".{module_name}", package=__name__)
+                imported_modules.append(module_name)
+
+        for module in imported_modules:
+            if hasattr(module, 'load') and callable(getattr(module, 'load')):
+                module.load(self)
