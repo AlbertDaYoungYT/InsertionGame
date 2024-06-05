@@ -11,7 +11,7 @@ def run():
     if not os.path.exists(os.path.join(HOME, "Content/")): os.mkdir(os.path.join(HOME, "Content/"))
     if not os.path.exists(os.path.join(HOME, "DLCs/")): os.mkdir(os.path.join(HOME, "DLCs/"))
     if not os.path.exists(os.path.join(HOME, "Languages/")): os.mkdir(os.path.join(HOME, "Languages/"))
-    if not os.path.exists(os.path.join(HOME, "Screens/")): os.mkdir(os.path.join(HOME, "Screens/"))
+    if not os.path.exists(os.path.join(HOME, "Scenes/")): os.mkdir(os.path.join(HOME, "Scenes/"))
 
 
 #    if not os.path.exists(os.path.join(USER, "AppData/Local/Insertion/")): os.mkdir(os.path.join(HOME, "AppData/Local/Insertion/"))

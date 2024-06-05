@@ -1,5 +1,5 @@
 from Content.Objects import *
-from Content.Screens import *
+from Content.Scenes import *
 from Content.Scripts import *
 
 import threading
