@@ -34,12 +34,18 @@ class Engine:
         self.save = SaveManager.Save(self, *args, **kwargs)
         self.server = ServerManager.Server(self, *args, **kwargs)
 
-        self.init("./Builders/")
+        self.args = args
+        self.kwargs = kwargs
+
+        self.initDir("./Builders/")
         self.loadPlugins()
     
-    def init(self, dir):
+    def preload(self, name, asset):
+        self.__setattr__(name, asset(self, *self.args, **self.kwargs))
+    
+    def initDir(self, dir):
         imported_modules = []
-        current_directory = os.path.join(os.path.dirname(__file__), "./Plugins/")
+        current_directory = os.path.join(os.path.dirname(__file__), dir)
 
         for filename in os.listdir(current_directory):
             if filename.endswith('.py') and filename != '__init__.py':
@@ -65,3 +71,9 @@ class Engine:
         for module in imported_modules:
             if hasattr(module, 'load') and callable(getattr(module, 'load')):
                 module.load(self)
+
+    def set(self, key, value):
+        self.__setattr__(key, value)
+    
+    def get(self, key):
+        return self.__getattribute__(key)
