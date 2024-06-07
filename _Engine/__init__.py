@@ -1,5 +1,4 @@
 from _Engine import CacheManager
-from _Engine import ContentManager
 from _Engine import LanguageManager
 from _Engine import LogManager
 from _Engine import SaveManager
@@ -36,7 +35,6 @@ class Engine:
         self.cache = CacheManager.Cache(self, *args, **kwargs)
         self.time = TimeManager.Time(self, *args, **kwargs)
         self.state = StateManager.State(self, *args, **kwargs)
-        self.content = ContentManager.Content(self, *args, **kwargs)
         self.save = SaveManager.Save(self, *args, **kwargs)
         self.server = ServerManager.Server(self, *args, **kwargs)
 
