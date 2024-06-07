@@ -8,6 +8,12 @@ from _Engine import StateManager
 from _Engine import SystemManager
 from _Engine import TimeManager
 
+from _Engine.Builders import *
+from _Engine.Builtin import *
+from _Engine.Errors import *
+from _Engine.Objects import *
+from _Engine.Plugins import *
+
 
 import importlib
 import threading
@@ -37,7 +43,7 @@ class Engine:
         self.args = args
         self.kwargs = kwargs
 
-        self.initDir("./Builders/")
+        self.initDir("_Engine/Builders/")
         self.loadPlugins()
     
     def preload(self, name, asset):
