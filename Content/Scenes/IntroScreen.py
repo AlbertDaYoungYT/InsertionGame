@@ -13,6 +13,8 @@ class Intro:
     def setParent(self, _self):
         self.parent = _self
 
-    def show(self):
+    def show(self):pass
+    
+    def hide(self):pass
         
-    def update(self):
+    def update(self):pass

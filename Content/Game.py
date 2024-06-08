@@ -17,12 +17,12 @@ class Game:
         self.queue = queue.Queue()
 
     
-    def preload(self, k):
-        loads = self.register["Worlds"][k]
-        return self.parent.cache.write(k, loads)
+    def preload(self, map, k, i):
+        loads = self.register[k][i]
+        return self.parent.cache.write(map, loads)
     
-    def load(self, k):
-        return self.parent.cache.read(k)
+    def load(self, map):
+        return self.parent.cache.read(map)
     
     def update(self):
         pass

@@ -1,4 +1,5 @@
 import threading
+import queue
 import time
 import uuid
 
@@ -23,5 +24,5 @@ class Time:
         del self.stopwatches[id]
         return t
     
-    def createTimer(self, end, callback):
+    def schedule(self, end, callback):
         return threading.Timer(end, callback)

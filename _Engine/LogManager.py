@@ -1,4 +1,5 @@
 import logging
+import sys
 import os
 from datetime import datetime
 
@@ -6,8 +7,9 @@ class Log:
     def __init__(self, _self, *args, **kwargs):
         self.parent = _self
 
-        self.root_logger = logging.getLogger()
+        self.root_logger = logging.getLogger("engine")
         self.root_logger.setLevel(logging.INFO)
+        self.root_logger.propagate = False
 
         self.module_logger = logging.getLogger(__name__)
         self.module_logger.setLevel(logging.DEBUG)
@@ -17,13 +19,10 @@ class Log:
         os.makedirs(log_directory, exist_ok=True)
         log_filename = os.path.join(log_directory, f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log")
 
-        if not self.root_logger.handlers:
-            fh = logging.FileHandler(log_filename)
-            fh.setFormatter(logging.Formatter("%(asctime)s [pid %(process)d] %(levelname)s %(module)s.%(funcName)s():%(lineno)d - %(name)s: %(message)s"))
-            self.root_logger.addHandler(fh)
-            self.module_logger.addHandler(fh)
-        
-        logging.info(f"Inception Engine {kwargs["engineJson"]['version']}-{kwargs["engineJson"]['build']}_pre-release ")
+        fh = logging.FileHandler(log_filename)
+        fh.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(funcName)s():%(lineno)d: %(message)s"))
+        self.root_logger.addHandler(fh)
+        self.module_logger.addHandler(fh)
     
     def getModule(self):
         return self.module_logger

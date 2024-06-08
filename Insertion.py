@@ -1,5 +1,4 @@
 import configparser
-import logging
 import uuid
 import json
 import glob
@@ -47,7 +46,7 @@ if purgeLogs:
 
 
 engine = Engine.Engine(c["DEFAULT"]["MachineID"], c, engineJson=EngineJSON)
-logging.getLogger().info("Engine Imported")
+engine.log.getRoot().info("Engine Imported")
 
 import platform
 import time
@@ -55,13 +54,45 @@ import time
 
 
 # Game Engine Initialization
-logging.getLogger().info("Game Engine Initialization Starting...")
+engine.log.getRoot().info("Game Engine Initialization Starting...")
 EngineJSON["build"] += 1 if devMode else 0
 
-try:
-    while True:
-        engine.update()
-except Exception as e:
-    logging.getLogger().error("ENGINE EXITED WITH ERROR:\n"+str(e.with_traceback(None)))
-    open("Data/Engine.json", "w").write(json.dumps(EngineJSON))
-    open("Data/Settings.json", "w").write(json.dumps(SettingsJSON))
+
+while engine.engineRunning:
+    try:
+        try:
+            while True:
+                engine.update()
+        except Exception as e:
+            if e == KeyboardInterrupt:
+                engine.log.getRoot().warning("Keyboard Interrupt Detected!")
+                if engine.lockKeyboardInterrupts and engine.interruptCallback == None:
+                    engine.log.getRoot().info("Ignoring Interrupt...")
+                elif engine.interruptCallback != None:
+                    try:
+                        engine.interruptCallback(e)
+                    except Exception as e:
+                        engine.log.getRoot().error("Error while Handling Interrupt, choosing priority...")
+                        if engine.interruptFallbackOption == 1:
+                            engine.log.getRoot().info("Engine is Shutting Down...")
+                            engine.stop()
+                        elif engine.interruptFallbackOption == 2:
+                            engine.log.getRoot().warning("Engine ignoring Interrupt Error.")
+                        else:
+                            engine.log.getRoot().info("No priority set, ignoring options and unpausing Engine...")
+                    finally:
+                        engine.log.getRoot().info("Interrupt Handled by Callback")
+
+                else:
+                    engine.log.getRoot().info("Engine lockKeyboardInterrupts property is disabled.")
+                    engine.log.getRoot().info("Engine is Shutting Down...")
+                    engine.stop()
+            else:
+                raise e
+    except Exception as e:
+        engine.log.getRoot().error("ENGINE EXITED WITH ERROR: "+str(e.with_traceback(None)))
+        engine.stop()
+
+
+open("Data/Engine.json", "w").write(json.dumps(EngineJSON))
+open("Data/Settings.json", "w").write(json.dumps(SettingsJSON))

@@ -18,6 +18,7 @@ import importlib
 import threading
 import logging
 import locale
+import queue
 import sys
 import os
 
@@ -31,6 +32,7 @@ class Engine:
         self.locale = locale.getdefaultlocale()[0]
 
         self.log = LogManager.Log(self, *args, **kwargs)
+        self.log.getRoot().info(f"Inception Engine {kwargs["engineJson"]['version']}-{kwargs["engineJson"]['build']}_{kwargs["engineJson"]['branch']} ")
         self.system = SystemManager.System(self, *args, **kwargs)
         self.language = LanguageManager.Language(self, *args, **kwargs)
         self.cache = CacheManager.Cache(self, *args, **kwargs)
@@ -44,13 +46,28 @@ class Engine:
 
         self.initDir("Builders")
         self.loadPlugins()
+        
+        # Non Editable Engine Properties
+        self.engineThreadQueue = queue.Queue()
+        self.engineRunning = True
+        self.engineTimeout = self.time.schedule(1, self.timeout)
+        self.engineStep = 0
         self.firstRun = True
+        self.currentScene = None
+
+        # Editable Engine Properties
+        self.interruptCallback = None
+        self.lockKeyboardInterrupts = False
+        self.interruptFallbackOption = 0 # 0: Nothing, 1: Exit, 2: Ignore
+
+        # Engine Starts
+        self.engineTimeout.start()
     
     def preload(self, name, asset):
         self.__setattr__(name, asset(self, *self.args, **self.kwargs))
     
     def initDir(self, dir):
-        logging.info(f"Intiating Engine Directory '{dir}'")
+        self.log.getRoot().info(f"Intiating Engine Directory '{dir}'")
         imported_modules = []
         current_directory = os.path.join(os.path.dirname(__file__), dir)
 
@@ -76,7 +93,7 @@ class Engine:
                     importlib.import_module(f".Plugins.{module_name}", package=__name__)
                     imported_modules.append(module_name)
                 except Exception as e:
-                    logging.warning(f"Plugin '{module_name}' encountered an error while loading: '{e}'")
+                    self.log.getRoot().warning(f"Plugin '{module_name}' encountered an error while loading: '{e}'")
 
         for module in imported_modules:
             if hasattr(module, 'load') and callable(getattr(module, 'load')):
@@ -88,16 +105,29 @@ class Engine:
     def get(self, key):
         return self.__getattribute__(key)
     
+    def timeout(self):
+        self.log.getRoot().warning("Engine Timeout Triggered!")
+        self.engineRunning = False
+
+    def stop(self):
+        self.engineRunning = False
+    
 
     def changeScene(self, scene):
         self.currentScene = scene
         self.currentScene.show()
     
     def update(self):
+        self.engineStep += 1
         if self.firstRun: 
             self.firstRun = False
-            logging.info("Engine is Running...")
+            self.log.getRoot().info("Engine is Running...")
         
         if self.currentScene != None:
+            self.engineTimeout.cancel()
             self.currentScene.setParent(self)
             self.currentScene.update()
+        
+        if self.engineRunning == False: raise EngineExceptions.EngineRuntimeError("Engine Stopped in Runtime")
+
+
