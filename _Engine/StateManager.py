@@ -26,7 +26,7 @@ from _Engine.Objects import StateObject
 
 class State:
 
-    def __init__(self, _self):
+    def __init__(self, _self, *args, **kwargs):
         self.parent = _self
     
     def new(self):

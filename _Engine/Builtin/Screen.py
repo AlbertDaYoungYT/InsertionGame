@@ -21,4 +21,4 @@ class StartLoading:
         ]
     
     def draw(self):
-        
+        pass

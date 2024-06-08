@@ -4,7 +4,7 @@ import requests
 
 class Server(threading.Thread):
 
-    def __init__(self, _self):
+    def __init__(self, _self, *args, **kwargs):
         self.parent = _self
         threading.Thread.__init__(self)
 

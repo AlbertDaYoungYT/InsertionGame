@@ -1,4 +1,7 @@
-import termux
+try:
+    import termux
+except Exception:
+    raise OSError("This is not an Android System")
 import json
 import sys
 

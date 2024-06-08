@@ -4,7 +4,7 @@ import uuid
 
 
 class Time:
-    def __init__(self, _self):
+    def __init__(self, _self, *args, **kwargs):
         self.parent = _self
         self.stopwatches = {}
     

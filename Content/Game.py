@@ -25,3 +25,4 @@ class Game:
         return self.parent.cache.read(k)
     
     def update(self):
+        pass

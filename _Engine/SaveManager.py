@@ -7,7 +7,7 @@ import os
 
 
 class Save(threading.Thread):
-    def __init__(self, _self):
+    def __init__(self, _self, *args, **kwargs):
         threading.Thread.__init__(self)
         self.parent = _self
 

@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 class Log:
-    def __init__(self, _self):
+    def __init__(self, _self, *args, **kwargs):
         self.parent = _self
 
         self.root_logger = logging.getLogger()
@@ -22,6 +22,8 @@ class Log:
             fh.setFormatter(logging.Formatter("%(asctime)s [pid %(process)d] %(levelname)s %(module)s.%(funcName)s():%(lineno)d - %(name)s: %(message)s"))
             self.root_logger.addHandler(fh)
             self.module_logger.addHandler(fh)
+        
+        logging.info(f"Inception Engine {kwargs["engineJson"]['version']}-{kwargs["engineJson"]['build']}_pre-release ")
     
     def getModule(self):
         return self.module_logger

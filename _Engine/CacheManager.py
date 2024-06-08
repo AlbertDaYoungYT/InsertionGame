@@ -3,7 +3,7 @@ import uuid
 
 
 class Cache:
-    def __init__(self, _self):
+    def __init__(self, _self, *args, **kwargs):
         self.parent = _self
 
         self.cache_map = {}
