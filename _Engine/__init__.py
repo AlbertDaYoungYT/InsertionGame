@@ -37,7 +37,7 @@ class Engine:
         self.log.getRoot().info(f"Inception Engine {kwargs["engineJson"]['version']}.{kwargs["engineJson"]['build']} tag:{kwargs["engineJson"]['tag']} ")
 
         # Declare Event 
-        self.eventEngineUpdate = Event("eventEngineUpdate")
+        self.eventEngineUpdate = Event("eventEngineUpdate", _suppress_logs=True)
         self.eventEnginePause = Event("eventEnginePause")
         self.eventEngineUnPause = Event("eventEngineUnPause")
         self.eventEngineShutdown = Event("eventEngineShutdown")
