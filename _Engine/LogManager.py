@@ -25,9 +25,9 @@ class Log:
         self.module_logger.addHandler(fh)
     
     @classmethod
-    def getModule(self):
-        return self.module_logger
+    def getModule(cls):
+        return cls.module_logger
 
     @classmethod
-    def getRoot(self):
-        return self.root_logger
+    def getRoot(cls):
+        return cls.root_logger

@@ -18,11 +18,11 @@ class Save:
         self.parent.eventEngineShutdown.subscribe(self.manualSave)
     
     @classmethod
-    def manualSave(self, state):
-        with open(f"./Data/Saves/{self.slot}.save", "wb") as sv:
+    def manualSave(cls, state):
+        with open(f"./Data/Saves/{cls.slot}.save", "wb") as sv:
             pickle.dump(state, sv)
     
     @classmethod
-    def loadSave(self, slot):
+    def loadSave(cls, slot):
         with open(f"./Data/Saves/{slot}.save", "rb") as sv:
             return pickle.load(sv)

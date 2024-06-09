@@ -18,17 +18,17 @@ class System:
             self.parent.log.getRoot().error("Could not fetch GPU")
     
     @classmethod
-    def getSystem(self):
+    def getSystem(cls):
         return platform.platform()
     
     @classmethod
-    def getArch(self):
+    def getArch(cls):
         return platform.machine()
     
     @classmethod
-    def getCpu(self):
+    def getCpu(cls):
         return platform.processor()
     
     @classmethod
-    def getGpu(self):
-        return self.computer.Win32_VideoController()[0]
+    def getGpu(cls):
+        return cls.computer.Win32_VideoController()[0]

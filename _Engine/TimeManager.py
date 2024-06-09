@@ -10,23 +10,23 @@ class Time:
         self.stopwatches = {}
     
     @classmethod
-    def startStopwatch(self):
+    def startStopwatch(cls):
         id = uuid.uuid1().hex
-        self.stopwatches[id] = time.time()
+        cls.stopwatches[id] = time.time()
         return id
     
     @classmethod
-    def lapStopwatch(self, id):
-        t = time.time() - self.stopwatches[id]
-        self.stopwatches[id] = time.time()
+    def lapStopwatch(cls, id):
+        t = time.time() - cls.stopwatches[id]
+        cls.stopwatches[id] = time.time()
         return t
     
     @classmethod
-    def stopStopwatch(self, id):
-        t = time.time() - self.stopwatches[id]
-        del self.stopwatches[id]
+    def stopStopwatch(cls, id):
+        t = time.time() - cls.stopwatches[id]
+        del cls.stopwatches[id]
         return t
     
     @classmethod
-    def schedule(self, end, callback):
+    def schedule(cls, end, callback):
         return threading.Timer(end, callback)
