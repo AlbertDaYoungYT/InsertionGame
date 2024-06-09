@@ -32,7 +32,7 @@ class Engine:
         self.locale = locale.getdefaultlocale()[0]
 
         self.log = LogManager.Log(self, *args, **kwargs)
-        self.log.getRoot().info(f"Inception Engine {kwargs["engineJson"]['version']}-{kwargs["engineJson"]['build']}_{kwargs["engineJson"]['branch']} ")
+        self.log.getRoot().info(f"Inception Engine {kwargs["engineJson"]['version']}.{kwargs["engineJson"]['build']} tag:{kwargs["engineJson"]['tag']} ")
         self.system = SystemManager.System(self, *args, **kwargs)
         self.language = LanguageManager.Language(self, *args, **kwargs)
         self.cache = CacheManager.Cache(self, *args, **kwargs)
@@ -67,7 +67,7 @@ class Engine:
         self.__setattr__(name, asset(self, *self.args, **self.kwargs))
     
     def initDir(self, dir):
-        self.log.getRoot().info(f"Intiating Engine Directory '{dir}'")
+        self.log.getRoot().info(f"Intiating Engine Directory '{dir}'...")
         imported_modules = []
         current_directory = os.path.join(os.path.dirname(__file__), dir)
 
@@ -83,6 +83,7 @@ class Engine:
 
     
     def loadPlugins(self):
+        self.log.getRoot().info(f"Loading Engine Plugins...")
         imported_modules = []
         current_directory = os.path.join(os.path.dirname(__file__), "./Plugins/")
 
@@ -114,6 +115,7 @@ class Engine:
     
 
     def changeScene(self, scene):
+        self.log.getRoot().info("Scene changing...")
         self.currentScene = scene
         self.currentScene.show()
     

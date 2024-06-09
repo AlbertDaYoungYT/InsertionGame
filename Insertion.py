@@ -88,9 +88,9 @@ while engine.engineRunning:
                     engine.log.getRoot().info("Engine is Shutting Down...")
                     engine.stop()
             else:
-                raise e
+                engine.log.getRoot().warning(f"Engine threw error: '{e.with_traceback(None)}'")
     except Exception as e:
-        engine.log.getRoot().error("ENGINE EXITED WITH ERROR: "+str(e.with_traceback(None)))
+        engine.log.getRoot().error(f"ENGINE EXITED WITH ERROR: '{e.with_traceback(None)}'")
         engine.stop()
 
 
