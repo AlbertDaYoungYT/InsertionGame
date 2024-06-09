@@ -36,7 +36,7 @@ class Engine:
         self.log = LogManager.Log(self, *args, **kwargs)
         self.log.getRoot().info(f"Inception Engine {kwargs["engineJson"]['version']}.{kwargs["engineJson"]['build']} tag:{kwargs["engineJson"]['tag']} ")
 
-        # Declare Event 
+        # Declare Events
         self.eventEngineUpdate = Event("eventEngineUpdate", _suppress_logs=True)
         self.eventEnginePause = Event("eventEnginePause")
         self.eventEngineUnPause = Event("eventEngineUnPause")
