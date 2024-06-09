@@ -7,6 +7,8 @@ from _Engine import StateManager
 from _Engine import SystemManager
 from _Engine import TimeManager
 
+from _Engine.Event import Event
+
 from _Engine.Builders import *
 from _Engine.Builtin import *
 from _Engine.Errors import *
@@ -33,6 +35,15 @@ class Engine:
 
         self.log = LogManager.Log(self, *args, **kwargs)
         self.log.getRoot().info(f"Inception Engine {kwargs["engineJson"]['version']}.{kwargs["engineJson"]['build']} tag:{kwargs["engineJson"]['tag']} ")
+
+        # Declare Event 
+        self.eventEngineUpdate = Event("eventEngineUpdate")
+        self.eventEnginePause = Event("eventEnginePause")
+        self.eventEngineUnPause = Event("eventEngineUnPause")
+        self.eventEngineShutdown = Event("eventEngineShutdown")
+        self.eventEngineRaiseError = Event("eventEngineRaiseError")
+
+        # Import Engine Managers
         self.system = SystemManager.System(self, *args, **kwargs)
         self.language = LanguageManager.Language(self, *args, **kwargs)
         self.cache = CacheManager.Cache(self, *args, **kwargs)
@@ -40,6 +51,8 @@ class Engine:
         self.state = StateManager.State(self, *args, **kwargs)
         self.save = SaveManager.Save(self, *args, **kwargs)
         self.server = ServerManager.Server(self, *args, **kwargs)
+
+
 
         self.args = args
         self.kwargs = kwargs
