@@ -121,9 +121,11 @@ class Engine:
     
     def timeout(self):
         self.log.getRoot().warning("Engine Timeout Triggered!")
+        self.eventEngineShutdown(self.currentScene)
         self.engineRunning = False
 
     def stop(self):
+        self.eventEngineShutdown(self.currentScene)
         self.engineRunning = False
     
 
@@ -146,3 +148,4 @@ class Engine:
         if self.engineRunning == False: raise EngineExceptions.EngineRuntimeError("Engine Stopped in Runtime")
 
 
+        self.eventEngineUpdate(self.engineStep)

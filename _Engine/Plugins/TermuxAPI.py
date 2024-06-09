@@ -30,6 +30,7 @@ class TermuxAPI:
 
 
     def __init__(self):
+        self.parent = None
         self.isTermuxAvalible = None
         self.requirements = {bool(hasattr(sys, "getandroidapilevel")): True}
 
@@ -38,7 +39,9 @@ class TermuxAPI:
             self.API = self.InternalAPI
     
 
-    def load(self):
+    def load(self, _self):
+        self.parent = _self
+        self.parent.log.getModule().info("TermuxAPI loaded")
         req_list = []
         for k, v in self.requirements:
             if k == v:

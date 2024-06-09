@@ -8,6 +8,7 @@ class Cache:
 
         self.cache_map = {}
 
+    @classmethod
     def write(self, key, value):
         id = uuid.uuid1().hex
         self.cache_map[key] = id
@@ -15,6 +16,7 @@ class Cache:
         pickle.dump(value, fo)
         return id
     
+    @classmethod
     def read(self, key):
         id = self.cache_map[key]
         fo = open(f"./Data/Cache/{id}", "r")

@@ -1,19 +1,11 @@
 
-from dataclasses import dataclass
 import queue
 
 class Game:
 
-    class Callbacks:
-
-        def SaveCallback(args):
-            return None
-
-
     def __init__(self, _self):
         self.parent = _self
 
-        self.register = {}
         self.queue = queue.Queue()
 
     
