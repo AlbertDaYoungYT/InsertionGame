@@ -3,10 +3,11 @@ import uuid
 
 
 class Cache:
+
+    cache_map = {}
+    
     def __init__(self, _self, *args, **kwargs):
         self.parent = _self
-
-        self.cache_map = {}
 
     @classmethod
     def write(cls, key, value):

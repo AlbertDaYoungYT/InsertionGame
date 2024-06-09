@@ -6,10 +6,11 @@ import os
 
 
 class System:
+    
+    computer = wmi.WMI()
 
     def __init__(self, _self, *args, **kwargs):
         self.parent = _self
-        self.computer = wmi.WMI()
 
         self.parent.log.getRoot().info(f"Running on '{self.getSystem()}:{self.getArch()}'")
         try:

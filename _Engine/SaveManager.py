@@ -4,12 +4,14 @@ import os
 
 
 class Save:
+    
+    slot = "Engine"
+
     def __init__(self, _self, *args, **kwargs):
         self.parent = _self
 
         self.monitored_state = None
 
-        self.slot = "Engine"
         os.makedirs("./Data/Saves/", exist_ok=True)
         self.gameActive = False
         self.enableAutoSave = True if self.parent.config["Saves"]["enableautosave"] == "yes" else False

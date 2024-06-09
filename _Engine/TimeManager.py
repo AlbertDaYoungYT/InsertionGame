@@ -5,9 +5,11 @@ import uuid
 
 
 class Time:
+
+    stopwatches = {}
+
     def __init__(self, _self, *args, **kwargs):
         self.parent = _self
-        self.stopwatches = {}
     
     @classmethod
     def startStopwatch(cls):

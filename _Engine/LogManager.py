@@ -4,16 +4,16 @@ import os
 from datetime import datetime
 
 class Log:
+    _root_logger = logging.getLogger("engine")
+    _root_logger.setLevel(logging.INFO)
+    _root_logger.propagate = False
+
+    _module_logger = logging.getLogger(__name__)
+    _module_logger.setLevel(logging.DEBUG)
+    _module_logger.propagate = False
+
     def __init__(self, _self, *args, **kwargs):
         self.parent = _self
-
-        self.root_logger = logging.getLogger("engine")
-        self.root_logger.setLevel(logging.INFO)
-        self.root_logger.propagate = False
-
-        self.module_logger = logging.getLogger(__name__)
-        self.module_logger.setLevel(logging.DEBUG)
-        self.module_logger.propagate = False
         
         log_directory = "./Data/Logs/"
         os.makedirs(log_directory, exist_ok=True)
@@ -21,13 +21,13 @@ class Log:
 
         fh = logging.FileHandler(log_filename)
         fh.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(funcName)s():%(lineno)d: %(message)s"))
-        self.root_logger.addHandler(fh)
-        self.module_logger.addHandler(fh)
+        Log._root_logger.addHandler(fh)
+        Log._module_logger.addHandler(fh)
     
     @classmethod
     def getModule(cls):
-        return cls.module_logger
+        return cls._module_logger
 
     @classmethod
     def getRoot(cls):
-        return cls.root_logger
+        return cls._root_logger
